@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<OutputType>Exe</OutputType>
+		<StartupObject>CinePulse.Mvc.Program</StartupObject>
+		<RootNamespace>CinePulse.Mvc</RootNamespace>
+		<AssemblyName>CinePulse.Mvc</AssemblyName>
+
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<OutputPath>bin\</OutputPath>
+		<Nullable>disable</Nullable>
+		<LangVersion>10.0</LangVersion>
+
+		<ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+		<UseIISExpress>true</UseIISExpress>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
+		<PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.9" />
+		<PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.9" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="System.Web" />
+		<Reference Include="System.Web.Routing" />
+		<Reference Include="System.Web.Abstractions" />
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+		<Reference Include="System.Configuration" />
+	</ItemGroup>
+
+	<!-- Ensure bin\CinePulse.Mvc.dll is always synchronized for IIS / IIS Express -->
+	<Target Name="SyncAssemblyForIIS" AfterTargets="AfterBuild">
+		<Copy SourceFiles="$(OutputPath)$(AssemblyName).exe" 
+		      DestinationFiles="$(OutputPath)$(AssemblyName).dll" 
+		      Condition="Exists('$(OutputPath)$(AssemblyName).exe')" 
+		      SkipUnchangedFiles="true" />
+	</Target>
+
+</Project>
